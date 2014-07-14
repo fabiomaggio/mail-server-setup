@@ -453,12 +453,24 @@ EOF
     echo "> Dovecot restarted"
 }
 
+function usage() {
+    echo "Usage: $0 <command> [<args>]"
+    echo -e "\n\nThe available commands are:"
+    echo -e "\n    init                Initialize the mail-server"
+    echo -e "\n    add-user            Add a mail user"
+    echo -e "\n    add-alias           Add a mail alias"
+    echo -e "\n    setup-postfix       Setup Postfix"
+    echo -e "\n    setup-dovecot       Setup Dovecot"
+
+    exit 1
+}
+
 ### Main
 ##############################
 
-# At least one argument has to be provided
+# If the script is called without arguments display the usage
 if [ $# = 0 ]; then
-    exit 1
+    usage
 fi
 
 # Process the arguments
@@ -469,6 +481,7 @@ while [ "$1" != "" ]; do
         add-alias) add_alias; shift;;
         setup-postfix) setup_postfix; shift;;
         setup-dovecot) setup_dovecot; shift;;
+        help) usage; shift;;
     esac
     shift
 done
